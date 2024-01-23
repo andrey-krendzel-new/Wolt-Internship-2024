@@ -19,4 +19,3 @@ Technologies used: React + TypeScript + Vite. Jest for Unit Testing.
 `npm run build`
 
 `npm start`
-# wolt
