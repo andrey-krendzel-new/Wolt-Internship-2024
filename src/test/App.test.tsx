@@ -71,14 +71,14 @@ describe('Renders main page correctly', async () => {
         // Setup
         await render(<App />);
         const button = await screen.queryByText('Calculate delivery price');
-        const counter = await screen.getByTitle("fee");
+        const counter = await screen.queryByText('0');
         const input = screen.getByLabelText("Delivery Distance (m)");
 
         // Pre Expectations
         expect(button).not.toBeNull();
 
         // Actions
-        fireEvent.change(input, {target: {value: '1000'}})
+        fireEvent.change(input, {target: {value: '1000'}})  
         fireEvent.click(button as HTMLElement);
         
         // Post Expectations
@@ -102,5 +102,42 @@ describe('Renders main page correctly', async () => {
         
         // Post Expectations
         expect(counter?.innerHTML).toBe('16.2');
+    });
+
+    it('The delivery fee can never be more than 15€', async () => {
+        // Setup
+        await render(<App />);
+        const button = await screen.queryByText('Calculate delivery price');
+        const counter = await screen.queryByText('0');
+        const input = screen.getByLabelText("Delivery Distance (m)");
+
+        // Pre Expectations
+        expect(button).not.toBeNull();
+
+        // Actions
+        fireEvent.change(input, {target: {value: '10000'}})
+        fireEvent.click(button as HTMLElement);
+        
+        // Post Expectations
+        expect(counter?.innerHTML).toBe('15');
+    });
+
+    it('The delivery is free when the cart value is equal or more than 200€', async () => {
+        // Setup
+        await render(<App />);
+        const button = await screen.queryByText('Calculate delivery price');
+        const counter = await screen.queryByText('0');
+        const input = screen.getByLabelText("Cart Value (€)");
+
+        // Pre Expectations
+        expect(button).not.toBeNull();
+
+        // Actions
+        fireEvent.change(input, {target: {value: '200'}})
+        fireEvent.click(button as HTMLElement);
+        
+        // Post Expectations
+        expect(input.value).toBe('200')
+        expect(counter?.innerHTML).toBe('0');
     });
 });
