@@ -21,7 +21,9 @@ function App() {
     if (cartValue <= 10) {
       cartSurcharge = 10 - cartValue;
     }
+
     const deliveryFee = Math.ceil(deliveryDistance / 500) * 1;
+
     let itemSurcharge = 0;
     if (itemAmount > 4) {
       itemSurcharge = (itemAmount - 4) * 0.5;
@@ -29,6 +31,7 @@ function App() {
     if (itemAmount > 12) {
       itemSurcharge += 1.2;
     }
+
     let initialDeliveryPrice = cartSurcharge + deliveryFee + itemSurcharge;
     if (
       dateTime != null &&
@@ -36,8 +39,12 @@ function App() {
       dateTime.hour() >= 15 &&
       dateTime.hour() <= 19
     ) {
+      //If Friday, between 15 and 19pm, inclusive
       initialDeliveryPrice = initialDeliveryPrice * 1.2;
     }
+
+    //Check the current delivery price, if it's over 15 or if cart
+    //value is over 200 adjust accordingly, otherwise set it in state
     adjustDeliveryPrice(initialDeliveryPrice);
   };
 
@@ -75,7 +82,7 @@ function App() {
           id="outlined-basic"
           label="Cart Value (€)"
           variant="outlined"
-          data-test-id="cartValue"
+          inputProps={{ "data-testid": "cartValue" }}
           onChange={onChangeCartValue}
         />
       </p>
@@ -84,7 +91,7 @@ function App() {
           id="outlined-basic"
           label="Delivery Distance (m)"
           variant="outlined"
-          data-test-id="deliveryDistance"
+          inputProps={{ "data-testid": "deliveryDistance" }}
           onChange={onChangeDeliveryDistance}
         />
       </p>
@@ -93,7 +100,7 @@ function App() {
           id="outlined-basic"
           label="Amount of items"
           variant="outlined"
-          data-test-id="numberOfItems"
+          inputProps={{ "data-testid": "numberOfItems" }}
           onChange={onChangeAmountOfItems}
         />
       </p>
@@ -101,18 +108,23 @@ function App() {
         <DemoItem label="Delivery time">
           <MobileDateTimePicker
             defaultValue={dayjs("2022-04-17T15:30")}
-            data-test-id="orderTime"
+            data-testid="orderTime"
             onChange={(newValue): void => setDateTime(newValue)}
           />
         </DemoItem>
       </LocalizationProvider>
       <div className="margin-top-5">
-        <Button variant="contained" onClick={(): void => calculateDeliveryPrice()}>
+        <Button
+          variant="contained"
+          onClick={(): void => calculateDeliveryPrice()}
+        >
           Calculate delivery price
         </Button>
       </div>
       <p>Delivery price:</p>
-      <div title="fee" data-test-id="fee">{Math.round(deliveryPrice * 100) / 100}</div>
+      <div title="fee" data-test-id="fee">
+        {Math.round(deliveryPrice * 100) / 100}
+      </div>
     </Container>
   );
 }

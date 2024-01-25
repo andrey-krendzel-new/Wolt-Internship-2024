@@ -1,143 +1,113 @@
 import { describe, expect, it, afterEach } from "vitest";
-import { render, screen, fireEvent, cleanup } from "@testing-library/react"
-import App from '../App';
+import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import App from "../App";
 
-describe('Renders main page correctly', async () => {
-    afterEach(() => {
-        cleanup();
-    });
-    /**
-     * Passes - shows title correctly
-     */
-    it('Should render the page correctly', async () => {
-        // Setup
-        await render(<App />);
-        const h2 = await screen.queryByText('Delivery Fee Calculator');
+describe("Renders main page correctly", async () => {
+  afterEach(() => {
+    cleanup();
+  });
 
-        // Post Expectations
-        expect(h2).not.toBeNull();
-    });
+  it("Should render the page correctly", async () => {
+    await render(<App />);
+    const h2 = await screen.queryByText("Delivery Fee Calculator");
 
-    /**
-     * Passes - shows the button count correctly present
-     */
-    it('Delivery price should be 0 on page load', async () => {
-        // Setup
-        await render(<App />);
-        const counter = await screen.queryByText('0');
+    expect(h2).not.toBeNull();
+  });
 
-        // Expectations
-        expect(counter).not.toBeNull();
-    });
+  it("Delivery price should be 0 on page load", async () => {
+    await render(<App />);
+    const counter = await screen.queryByText("0");
 
-    /**
-     * Passes - clicks the button 3 times and shows the correct count
-     */
-    it('Clicking calculate button should return cart surcharge (10€) by default', async () => {
-        // Setup
-        await render(<App />);
-        const button = await screen.queryByText('Calculate delivery price');
-        const counter = await screen.queryByText('0');
-        
-        // Pre Expectations
-        expect(button).not.toBeNull();
+    expect(counter).not.toBeNull();
+  });
 
-        // Actions
-        fireEvent.click(button as HTMLElement);
-        
-        // Post Expectations
-        expect(counter?.innerHTML).toBe('10');
-    });
+  it("Clicking calculate button should return cart surcharge (10€) by default", async () => {
+    await render(<App />);
+    const button = await screen.queryByText("Calculate delivery price");
+    const counter = await screen.queryByText("0");
 
-    it('A small order surcharge is added to the delivery price. If the cart value is 8.90€, the surcharge will be 1.10€.', async () => {
-        // Setup
-        await render(<App />);
-        const button = await screen.queryByText('Calculate delivery price');
-        const counter = await screen.queryByText('0');
-        const input = screen.getByLabelText("Cart Value (€)");
-        
-        // Pre Expectations
-        expect(button).not.toBeNull();
+    expect(button).not.toBeNull();
 
-        // Actions
-        fireEvent.change(input, {target: {value: '8.90'}})
-        fireEvent.click(button as HTMLElement);
-        
-        // Post Expectations
-        expect(counter?.innerHTML).toBe('1.1');
-    });
+    fireEvent.click(button as HTMLElement);
 
-    it('A delivery fee for the first 1000 meters (=1km) is 2€', async () => {
-        // Setup
-        await render(<App />);
-        const button = await screen.queryByText('Calculate delivery price');
-        const counter = await screen.queryByText('0');
-        const input = screen.getByLabelText("Delivery Distance (m)");
+    expect(counter?.innerHTML).toBe("10");
+  });
 
-        // Pre Expectations
-        expect(button).not.toBeNull();
+  it("A small order surcharge is added to the delivery price. If the cart value is 8.90€, the surcharge will be 1.10€.", async () => {
+    await render(<App />);
+    const button = await screen.queryByText("Calculate delivery price");
+    const counter = await screen.queryByText("0");
+    const input = screen.getByTestId("cartValue");
 
-        // Actions
-        fireEvent.change(input, {target: {value: '1000'}})  
-        fireEvent.click(button as HTMLElement);
-        
-        // Post Expectations
-        expect(input.value).toBe('1000')
-        expect(counter?.innerHTML).toBe('12');
-    });
+    // As an alternative, getByLabelText can be used
+    //const input = screen.getByLabelText("Cart Value (€)");
 
-    it('If the number of items is 14, 6.20€ surcharge is added', async () => {
-        // Setup
-        await render(<App />);
-        const button = await screen.queryByText('Calculate delivery price');
-        const counter = await screen.queryByText('0');
-        const input = screen.getByLabelText("Amount of items");
+    expect(button).not.toBeNull();
 
-        // Pre Expectations
-        expect(button).not.toBeNull();
+    fireEvent.change(input, { target: { value: "8.90" } });
+    fireEvent.click(button as HTMLElement);
 
-        // Actions
-        fireEvent.change(input, {target: {value: '14'}})
-        fireEvent.click(button as HTMLElement);
-        
-        // Post Expectations
-        expect(counter?.innerHTML).toBe('16.2');
-    });
+    expect(counter?.innerHTML).toBe("1.1");
+  });
 
-    it('The delivery fee can never be more than 15€', async () => {
-        // Setup
-        await render(<App />);
-        const button = await screen.queryByText('Calculate delivery price');
-        const counter = await screen.queryByText('0');
-        const input = screen.getByLabelText("Delivery Distance (m)");
+  it("A delivery fee for the first 1000 meters (=1km) is 2€", async () => {
+    await render(<App />);
+    const button = await screen.queryByText("Calculate delivery price");
+    const counter = await screen.queryByText("0");
+    const inputField = await screen.getByTestId("deliveryDistance");
 
-        // Pre Expectations
-        expect(button).not.toBeNull();
+    expect(button).not.toBeNull();
 
-        // Actions
-        fireEvent.change(input, {target: {value: '10000'}})
-        fireEvent.click(button as HTMLElement);
-        
-        // Post Expectations
-        expect(counter?.innerHTML).toBe('15');
-    });
+    fireEvent.change(inputField, { target: { value: "1000" } });
+    fireEvent.click(button as HTMLElement);
 
-    it('The delivery is free when the cart value is equal or more than 200€', async () => {
-        // Setup
-        await render(<App />);
-        const button = await screen.queryByText('Calculate delivery price');
-        const counter = await screen.queryByText('0');
-        const input = screen.getByLabelText("Cart Value (€)");
+    expect(inputField.value).toBe("1000");
+    expect(counter?.innerHTML).toBe("12");
+  });
 
-        // Pre Expectations
-        expect(button).not.toBeNull();
+  it("If the number of items is 10, 3€ surcharge is added", async () => {
+    await render(<App />);
+    const button = await screen.queryByText("Calculate delivery price");
+    const counter = await screen.queryByText("0");
+    const input = screen.getByTestId("numberOfItems");
+    //As an alternative, getByLabelText can be used
+    //const input = screen.getByLabelText("Amount of items");
 
-        // Actions
-        fireEvent.change(input, {target: {value: '200'}})
-        fireEvent.click(button as HTMLElement);
-        
-        // Post Expectations
-        expect(input.value).toBe('200')
-        expect(counter?.innerHTML).toBe('0');
-    });
+    expect(button).not.toBeNull();
+
+    fireEvent.change(input, { target: { value: "10" } });
+    fireEvent.click(button as HTMLElement);
+
+    expect(input.value).toBe("10");
+    expect(counter?.innerHTML).toBe("13");
+  });
+
+  it("The delivery fee can never be more than 15€", async () => {
+    await render(<App />);
+    const button = await screen.queryByText("Calculate delivery price");
+    const counter = await screen.queryByText("0");
+    const input = screen.getByTestId("numberOfItems");
+
+    expect(button).not.toBeNull();
+
+    fireEvent.change(input, { target: { value: "14" } });
+    fireEvent.click(button as HTMLElement);
+
+    expect(counter?.innerHTML).toBe("15");
+  });
+
+  it("The delivery is free when the cart value is equal or more than 200€", async () => {
+    await render(<App />);
+    const button = await screen.queryByText("Calculate delivery price");
+    const counter = await screen.queryByText("0");
+    const input = screen.getByTestId("cartValue");
+
+    expect(button).not.toBeNull();
+
+    fireEvent.change(input, { target: { value: "200" } });
+    fireEvent.click(button as HTMLElement);
+
+    expect(input.value).toBe("200");
+    expect(counter?.innerHTML).toBe("0");
+  });
 });
