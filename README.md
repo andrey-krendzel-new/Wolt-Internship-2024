@@ -2,7 +2,7 @@
 
 Task description: https://github.com/woltapp/engineering-internship-2024/
 
-Demo: TBA
+Demo: https://main--spectacular-bonbon-9e12a8.netlify.app/
 
 Technologies used: React + TypeScript + Vite. Jest for Unit Testing.
 
