@@ -1,3 +1,50 @@
-.margin-top-5 {
-  margin-top: 5%;
+.margin-top-2 {
+  margin-top: 2%;
+}
+
+.form-box {
+  min-width: 100%;
+  margin: 0vw;
+  padding: 1vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
+.form-box input,
+textarea {
+  display: inline-block;
+  width: 100%;
+  padding: 0.6vw;
+  margin: 0.9vw 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-box textarea {
+  height: 15vh;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.container p {
+  margin-right: 10px;
+}
+
+.logo {
+  width: 50%;
+  height: 50%;
+}
+
+.blue {
+  background-color: blue;
+  color: white;
 }

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+// import Button from "@mui/material/Button";
+// import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import dayjs, { Dayjs } from "dayjs";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
-import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
+import { StaticDateTimePicker } from '@mui/x-date-pickers/StaticDateTimePicker';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "./App.css";
@@ -76,54 +76,65 @@ function App() {
 
   return (
     <Container maxWidth="sm">
-      <h2>Delivery Fee Calculator</h2>
-      <p>
-        <TextField
-          id="outlined-basic"
-          label="Cart Value (€)"
-          variant="outlined"
-          inputProps={{ "data-testid": "cartValue" }}
-          onChange={onChangeCartValue}
+      <div className="form-box">
+        <img
+          className="logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wolt-logo-2019.png/600px-Wolt-logo-2019.png"
         />
-      </p>
-      <p>
-        <TextField
-          id="outlined-basic"
-          label="Delivery Distance (m)"
-          variant="outlined"
-          inputProps={{ "data-testid": "deliveryDistance" }}
-          onChange={onChangeDeliveryDistance}
-        />
-      </p>
-      <p>
-        <TextField
-          id="outlined-basic"
-          label="Amount of items"
-          variant="outlined"
-          inputProps={{ "data-testid": "numberOfItems" }}
-          onChange={onChangeAmountOfItems}
-        />
-      </p>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoItem label="Delivery time">
-          <MobileDateTimePicker
+        <h2>Delivery Fee Calculator</h2>
+        <form>
+          <label>Cart Value (€):</label>
+          <input
+            className="formInput"
+            type="text"
+            name="username"
+            data-testid="cartValue"
+            onChange={onChangeCartValue}
+          />
+          <label>Delivery Distance (m):</label>
+          <input
+            className="formInput"
+            type="text"
+            name="username"
+            data-testid="deliveryDistance"
+            onChange={onChangeDeliveryDistance}
+          />
+          <label>Amount of items:</label>
+          <input
+            className="formInput"
+            type="text"
+            name="username"
+            data-testid="numberOfItems"
+            onChange={onChangeAmountOfItems}
+          />
+        </form>
+        <label>Date/time:</label>
+        <br />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <StaticDateTimePicker
+            className="date-time-picker"
+            sx={{
+              boxShadow: "none",
+              ".MuiOutlinedInput-notchedOutline": { border: 0 },
+            }}
             defaultValue={dayjs("2022-04-17T15:30")}
             data-testid="orderTime"
             onChange={(newValue): void => setDateTime(newValue)}
           />
-        </DemoItem>
-      </LocalizationProvider>
-      <div className="margin-top-5">
-        <Button
-          variant="contained"
-          onClick={(): void => calculateDeliveryPrice()}
-        >
-          Calculate delivery price
-        </Button>
-      </div>
-      <p>Delivery price:</p>
-      <div title="fee" data-test-id="fee">
-        {Math.round(deliveryPrice * 100) / 100}
+        </LocalizationProvider>
+        <div className="margin-top-2">
+          <button className="blue" onClick={(): void => calculateDeliveryPrice()}>
+            Calculate delivery price
+          </button>
+        </div>
+        <div className="container">
+          <p>
+            <b>Delivery price:</b>
+          </p>
+          <div title="fee" data-testid="fee">
+            {deliveryPrice.toFixed(2)}
+          </div>
+        </div>
       </div>
     </Container>
   );

@@ -1,5 +1,9 @@
 # Wolt Delivery Fee Calculator.
 
+Task description: https://github.com/woltapp/engineering-internship-2024/
+
+Demo: TBA
+
 Technologies used: React + TypeScript + Vite. Jest for Unit Testing.
 
 ## Instructions
