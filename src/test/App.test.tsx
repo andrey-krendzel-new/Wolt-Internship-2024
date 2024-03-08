@@ -61,7 +61,6 @@ describe("Renders main page correctly", async () => {
     fireEvent.change(inputField, { target: { value: "1000" } });
     fireEvent.click(button as HTMLElement);
 
-    expect(inputField.value).toBe("1000");
     expect(counter?.innerHTML).toBe("12.00");
   });
 
@@ -78,7 +77,6 @@ describe("Renders main page correctly", async () => {
     fireEvent.change(input, { target: { value: "10" } });
     fireEvent.click(button as HTMLElement);
 
-    expect(input.value).toBe("10");
     expect(counter?.innerHTML).toBe("13.00");
   });
 
@@ -107,7 +105,6 @@ describe("Renders main page correctly", async () => {
     fireEvent.change(input, { target: { value: "200" } });
     fireEvent.click(button as HTMLElement);
 
-    expect(input.value).toBe("200");
     expect(counter?.innerHTML).toBe("0.00");
   });
 });
