@@ -30,6 +30,12 @@ textarea {
   height: 15vh;
 }
 
+.form-box .errorMessage {
+  font-size: 12px;
+  color: red;
+  margin-top: -2%; 
+}
+
 .container {
   display: flex;
   align-items: center;

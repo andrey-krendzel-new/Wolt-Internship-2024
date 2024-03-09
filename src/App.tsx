@@ -14,8 +14,14 @@ function App() {
   const [deliveryDistance, setDeliveryDistance] = useState(0);
   const [itemAmount, setItemAmount] = useState(0);
   const [dateTime, setDateTime] = useState<Dayjs | null>(dayjs("2022-04-17"));
+  const [errorCartValue, setErrorCartValue] = useState("");
+  const [errorItemAmount, setErrorItemAmount] = useState("");
+  const [errorDeliveryDistance, setErrorDeliveryDistance] = useState("");
+  const [errorDateTime, setErrorDateTime] = useState("");
 
   const calculateDeliveryPrice = () => {
+    //First validate the input elements
+    formValidation();
     let cartSurcharge = 0;
     if (cartValue <= 10) {
       cartSurcharge = 10 - cartValue;
@@ -57,6 +63,20 @@ function App() {
     }
   };
 
+  const formValidation = () => {
+        if (cartValue === 0){
+          setErrorCartValue("Please enter a cart value");
+        } 
+        
+        if (itemAmount === 0){
+          setErrorItemAmount("Please enter an item amount");
+        }
+
+        if (deliveryDistance === 0){
+          setErrorDeliveryDistance("Please enter a delivery distance");
+        }
+  };
+
   const onChangeCartValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCartValue(Number(event.target.value));
   };
@@ -90,6 +110,7 @@ function App() {
             data-testid="cartValue"
             onChange={onChangeCartValue}
           />
+          <p className="errorMessage">{errorCartValue}</p>
           <label>Delivery Distance (m):</label>
           <input
             className="formInput"
@@ -98,6 +119,7 @@ function App() {
             data-testid="deliveryDistance"
             onChange={onChangeDeliveryDistance}
           />
+          <p className="errorMessage">{errorDeliveryDistance}</p>
           <label>Amount of items:</label>
           <input
             className="formInput"
@@ -106,6 +128,7 @@ function App() {
             data-testid="numberOfItems"
             onChange={onChangeAmountOfItems}
           />
+          <p className="errorMessage">{errorItemAmount}</p>
         </form>
         <label>Date/time:</label>
         <br />
@@ -121,6 +144,7 @@ function App() {
             onChange={(newValue): void => setDateTime(newValue)}
           />
         </LocalizationProvider>
+        <p className="errorMessage">{errorDateTime}</p>
         <div className="margin-top-2">
           <button className="blue" onClick={(): void => calculateDeliveryPrice()}>
             Calculate delivery price
