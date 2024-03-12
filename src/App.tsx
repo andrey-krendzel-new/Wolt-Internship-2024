@@ -17,7 +17,6 @@ function App() {
   const [errorCartValue, setErrorCartValue] = useState("");
   const [errorItemAmount, setErrorItemAmount] = useState("");
   const [errorDeliveryDistance, setErrorDeliveryDistance] = useState("");
-  const [errorDateTime, setErrorDateTime] = useState("");
 
   const calculateDeliveryPrice = () => {
     //First validate the input elements
@@ -64,6 +63,8 @@ function App() {
   };
 
   const formValidation = () => {
+        //check if the value is numerical
+
         if (cartValue === 0){
           setErrorCartValue("Please enter a cart value");
         } 
@@ -144,7 +145,6 @@ function App() {
             onChange={(newValue): void => setDateTime(newValue)}
           />
         </LocalizationProvider>
-        <p className="errorMessage">{errorDateTime}</p>
         <div className="margin-top-2">
           <button className="blue" onClick={(): void => calculateDeliveryPrice()}>
             Calculate delivery price
