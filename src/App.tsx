@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import dayjs, { Dayjs } from "dayjs";
-import { StaticDateTimePicker } from '@mui/x-date-pickers/StaticDateTimePicker';
+import { StaticDateTimePicker } from "@mui/x-date-pickers/StaticDateTimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "./App.css";
@@ -63,35 +63,52 @@ function App() {
   };
 
   const formValidation = () => {
-        //check if the value is numerical
+    if (cartValue === 0) {
+      setErrorCartValue("Please enter a cart value");
+    }
 
-        if (cartValue === 0){
-          setErrorCartValue("Please enter a cart value");
-        } 
-        
-        if (itemAmount === 0){
-          setErrorItemAmount("Please enter an item amount");
-        }
+    if (itemAmount === 0) {
+      setErrorItemAmount("Please enter an item amount");
+    }
 
-        if (deliveryDistance === 0){
-          setErrorDeliveryDistance("Please enter a delivery distance");
-        }
+    if (deliveryDistance === 0) {
+      setErrorDeliveryDistance("Please enter a delivery distance");
+    }
   };
 
+  function isNumerical(inputString: string): boolean {
+    return /^-?\d*\.?\d+$/.test(inputString);
+  }
+
   const onChangeCartValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCartValue(Number(event.target.value));
+    if (!isNumerical(event.target.value)) {
+      setErrorCartValue("The value should be a numerical value");
+    } else {
+      setErrorCartValue("");
+      setCartValue(Number(event.target.value));
+    }
   };
 
   const onChangeDeliveryDistance = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setDeliveryDistance(Number(event.target.value));
+    if (!isNumerical(event.target.value)) {
+      setErrorDeliveryDistance("The value should be a numerical value");
+    } else {
+      setErrorDeliveryDistance("");
+      setDeliveryDistance(Number(event.target.value));
+    }
   };
 
   const onChangeAmountOfItems = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setItemAmount(Number(event.target.value));
+    if (!isNumerical(event.target.value)) {
+      setErrorItemAmount("The value should be a numerical value");
+    } else {
+      setErrorItemAmount("");
+      setItemAmount(Number(event.target.value));
+    }
   };
 
   return (
@@ -146,7 +163,10 @@ function App() {
           />
         </LocalizationProvider>
         <div className="margin-top-2">
-          <button className="blue" onClick={(): void => calculateDeliveryPrice()}>
+          <button
+            className="blue"
+            onClick={(): void => calculateDeliveryPrice()}
+          >
             Calculate delivery price
           </button>
         </div>
