@@ -2,9 +2,15 @@
 
 Task description: https://github.com/woltapp/engineering-internship-2024/
 
-Demo: https://main--spectacular-bonbon-9e12a8.netlify.app/
+Demo:
 
-Technologies used: React + TypeScript + Vite. Jest for Unit Testing.
+- On **AWS Fargate**: http://3.235.87.65:3000/
+- On **Google Cloud Run**: https://wolt-react-367811388347.us-central1.run.app
+- On **Microsoft Azure**: http://aci-demo-202.eastus.azurecontainer.io:3000/
+
+Technologies used: React + TypeScript. Jest for Unit Testing.
+
+Backup link: https://main--spectacular-bonbon-9e12a8.netlify.app/
 
 ## Instructions
 
