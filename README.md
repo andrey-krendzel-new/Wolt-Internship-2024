@@ -7,7 +7,7 @@ Demo:
 - On **AWS Fargate**: http://3.235.87.65:3000/
 - On **Google Cloud Run**: https://wolt-react-367811388347.us-central1.run.app
 - On **Microsoft Azure**:
-  - Container Instances: http://aci-demo-202.eastus.azurecontainer.io:3000/
+  - Container Instances: (removed due to costs)
   - Container Apps: https://woltdocker-containerapps.agreeablecliff-0e4d7ba6.eastus.azurecontainerapps.io/
   - (Cost comparison)
 
