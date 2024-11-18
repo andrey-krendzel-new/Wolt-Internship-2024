@@ -4,11 +4,11 @@ Task description: https://github.com/woltapp/engineering-internship-2024/
 
 Demo:
 
-- On **AWS Fargate**: http://3.235.87.65:3000/
-- On **Google Cloud Run**: https://wolt-react-367811388347.us-central1.run.app
+- On **AWS Fargate**: (removed due to costs)
+- On **Google Cloud Run**: (removed due to costs)
 - On **Microsoft Azure**:
   - Container Instances: (removed due to costs)
-  - Container Apps: https://woltdocker-containerapps.agreeablecliff-0e4d7ba6.eastus.azurecontainerapps.io/
+  - Container Apps: (removed due to costs)
   - (Cost comparison)
 
 Technologies used: React + TypeScript. Jest for Unit Testing.
